@@ -1,0 +1,260 @@
+/* People cards styling to match reference website */
+
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin: 2rem 0;
+  justify-content: center;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.person-card {
+  text-align: center;
+  padding: 1.5rem;
+  background: transparent;
+
+  .person-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    display: block;
+    border: 3px solid #f5f5f5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  h3 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+
+    a {
+      color: #2980b9;
+      text-decoration: none;
+
+      &:hover {
+        color: #1f5f99;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .person-title {
+    margin: 0.25rem 0;
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .person-affiliation {
+    margin: 0.25rem 0;
+    color: #888;
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+}
+
+/* Single postdoc or single person styling */
+.person-card:not(.students-grid .person-card) {
+  max-width: 300px;
+  margin: 1.5rem auto;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Postdoctoral researchers section specific styling */
+#postdocs {
+  .person-card {
+    text-align: center;
+    margin: 1.5rem auto;
+    max-width: 350px;
+    display: block;
+  }
+
+  /* Ensure postdoc section is visible */
+  margin-bottom: 3rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .students-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .person-card .person-photo {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Ensure sections have proper spacing */
+h2[id] {
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  padding-top: 1rem;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section spacing for better visual separation */
+#postdocs,
+#students,
+#news,
+#awards,
+#featured-publications,
+#talks,
+#contact {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+}
+
+/* Two-row layout matching the sketch */
+@media screen and (min-width: $large) {
+  #main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    margin-top: 1rem !important;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 3rem;
+    align-items: start;
+  }
+
+  /* Profile in first column */
+  .sidebar {
+    position: relative !important;
+    height: auto !important;
+    overflow-y: visible !important;
+    padding-top: 0 !important;
+    width: 100%;
+    margin: 0;
+    grid-column: 1;
+  }
+
+  /* Biography content in second column */
+  .page {
+    margin: 0;
+    grid-column: 2;
+  }
+
+  .page__content {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Biography section should start at the top */
+  .page__content h2:first-of-type {
+    margin-top: 0 !important;
+  }
+
+  /* Sections after Education should span both columns (full width) */
+  #postdocs,
+  #students,
+  #msc-students,
+  #news,
+  #awards,
+  #featured-publications,
+  #talks,
+  #contact {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin: 3rem 0 0 0;
+  }
+
+  /* First full-width section needs extra top margin */
+  #postdocs {
+    margin-top: 4rem;
+  }
+}
+
+/* Ensure smooth scrolling behavior for the whole page */
+body {
+  scroll-behavior: smooth;
+}
+
+/* Better spacing for the main content area */
+#main {
+  @include clearfix;
+  @media screen and (min-width: $large) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 0;
+    max-width: $x-large;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Ensure proper clearfix for the two-column layout */
+.page::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Biography section styling */
+.page__content > p {
+  font-size: $type-size-5;
+  line-height: 1.6;
+  margin-bottom: 1.2em;
+  text-align: left !important;
+  color: var(--global-text-color);
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Ensure all content is left-aligned */
+.page__content {
+  text-align: left !important;
+
+  * {
+    text-align: left !important;
+  }
+
+  .students-grid,
+  .person-card {
+    text-align: center !important; /* Keep person cards centered */
+  }
+}
+
+/* Section headers styling */
+.page__content h2 {
+  font-size: $type-size-3;
+  font-weight: 600;
+  color: var(--global-text-color);
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: none;
+}
+
+/* First section after bio should have less top margin */
+.page__content h2:first-of-type {
+  margin-top: 2rem;
+}
+
+/* Hide automatic page title for homepage */
+.page__title {
+  display: none;
+}
+
+.page__meta {
+  display: none;
+}

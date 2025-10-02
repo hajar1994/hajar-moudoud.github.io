@@ -1,0 +1,104 @@
+---
+layout: default
+---
+
+{% include base_path %}
+
+<div id="main" role="main" class="academic-layout">
+  <!-- First Row: Profile and Bibliography -->
+  <div class="main-content-row">
+    <!-- Profile Column (33%) -->
+    <div class="profile-section">
+      {% include author-profile.html %}
+    </div>
+
+    <!-- Bibliography/Content Column (60%) -->
+    <div class="bibliography-section">
+      <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+        <div class="page__inner-wrap">
+          <section class="page__content" itemprop="text">
+            {{ content }}
+          </section>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- News Section -->
+  <div class="news-section" id="news">
+    <div class="news-container">
+      <h2>Recent News</h2>
+      <div class="news-list">
+        {% assign recent_news = site.news | sort: "date" | reverse | limit: 3 %}
+        {% for news_item in recent_news %}
+        <div class="news-item">
+          <div class="news-date">
+            {{ news_item.date | date: "%B %Y" }}
+          </div>
+          <div class="news-content">
+            <h3>{{ news_item.title }}</h3>
+            <p>{{ news_item.excerpt | default: news_item.content | strip_html | truncate: 200 }}</p>
+            {% if news_item.content != news_item.excerpt %}
+            <a href="{{ news_item.url | relative_url }}" class="read-more">Read more →</a>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Row: Students Section -->
+  <div class="students-section" id="people">
+    <div class="students-container">
+      <!-- PhD Students -->
+      <div class="student-group">
+        <h3>Ph.D. Students</h3>
+        <div class="students-grid">
+          {% assign phd_students = site.students | where: "type", "phd" | sort: "order" %}
+          {% for student in phd_students %}
+          <div class="student-card">
+            <div class="student-avatar">
+              <img src="{{ base_path }}/images/{{ student.photo }}" alt="{{ student.name }}" class="student-photo">
+            </div>
+            <div class="student-info">
+              <h4 class="student-name">{{ student.name }}</h4>
+              <p class="student-affiliation">{{ student.affiliation }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Master's Students -->
+      <div class="student-group">
+        <h3>Master's Students</h3>
+        <div class="students-grid">
+          {% assign msc_students = site.students | where: "type", "msc" | sort: "order" %}
+          {% for student in msc_students %}
+          <div class="student-card">
+            <div class="student-avatar">
+              <img src="{{ base_path }}/images/{{ student.photo }}" alt="{{ student.name }}" class="student-photo">
+            </div>
+            <div class="student-info">
+              <h4 class="student-name">{{ student.name }}</h4>
+              <p class="student-affiliation">{{ student.affiliation }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Third Row: Quick Contact Section -->
+  <div class="contact-section">
+    <div class="contact-container">
+      <h2>Get in Touch</h2>
+      <div class="quick-contact">
+        <p>Interested in collaboration or have questions about my research?</p>
+        <a href="/contact/" class="contact-button">Contact Me</a>
+      </div>
+    </div>
+  </div>
+</div>

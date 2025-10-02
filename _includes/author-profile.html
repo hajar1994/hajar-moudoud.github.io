@@ -1,0 +1,77 @@
+{% include base_path %}
+
+{% if page.author and site.data.authors[page.author] %}
+  {% assign author = site.data.authors[page.author] %}{% else %}{% assign author = site.author %}
+{% endif %}
+
+<div id="profile">
+  {% if author.avatar %}
+    {% if author.avatar contains "://" %}
+      <img class="avatar avatar-circle" width="270" height="270" src="{{ author.avatar }}" alt="{{ author.name }}" />
+    {% else %}
+      <img class="avatar avatar-circle" width="270" height="270" src="{{ author.avatar | prepend: "/images/" | prepend: base_path }}" alt="{{ author.name }}" />
+    {% endif %}
+  {% endif %}
+
+  <div class="portrait-title">
+    <h2>{{ author.name }}</h2>
+    {% if author.bio %}<h3>{{ author.bio }}</h3>{% endif %}
+    {% if author.employer %}
+      <h3>
+        <a href="#" target="_blank" rel="noopener">
+          <span>{{ author.employer }}</span>
+        </a>
+      </h3>
+    {% endif %}
+  </div>
+
+  <ul class="network-icon" aria-hidden="true">
+    {% if author.email %}
+      <li>
+        <a href="mailto:{{ author.email }}" aria-label="envelope">
+          <i class="fas fa-envelope big-icon"></i>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if author.googlescholar %}
+      <li>
+        <a href="{{ author.googlescholar }}" target="_blank" rel="noopener" aria-label="google-scholar">
+          <i class="ai ai-google-scholar big-icon"></i>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if author.github %}
+      <li>
+        <a href="https://github.com/{{ author.github }}" target="_blank" rel="noopener" aria-label="github">
+          <i class="fab fa-github big-icon"></i>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if author.linkedin %}
+      <li>
+        <a href="https://www.linkedin.com/in/{{ author.linkedin }}" target="_blank" rel="noopener" aria-label="linkedin">
+          <i class="fab fa-linkedin big-icon"></i>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if author.twitter %}
+      <li>
+        <a href="https://twitter.com/{{ author.twitter }}" target="_blank" rel="noopener" aria-label="twitter">
+          <i class="fab fa-twitter big-icon"></i>
+        </a>
+      </li>
+    {% endif %}
+
+    {% if author.uri %}
+      <li>
+        <a href="{{ author.uri }}" target="_blank" rel="noopener" aria-label="cv">
+          <i class="ai ai-cv big-icon"></i>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</div>
