@@ -21,17 +21,19 @@
     $index: str-index($span, ' of ');
 
     @if $index {
-      $numerator: str-slice($span, 1, $index - 1);
+      $numerator-str: str-slice($span, 1, $index - 1);
       $rest: str-slice($span, $index + 4);
       $denominator-end: str-index($rest, ' ');
 
       @if $denominator-end {
-        $denominator: str-slice($rest, 1, $denominator-end - 1);
-        @return (to-number($numerator) / to-number($denominator)) * 100%;
+        $denominator-str: str-slice($rest, 1, $denominator-end - 1);
       } @else {
-        $denominator: $rest;
-        @return (to-number($numerator) / to-number($denominator)) * 100%;
+        $denominator-str: $rest;
       }
+
+      $numerator: to-number($numerator-str);
+      $denominator: to-number($denominator-str);
+      @return ($numerator / $denominator) * 100%;
     }
   }
   @return $span;
@@ -74,11 +76,32 @@
   }
 }
 
+// Helper function to trim whitespace from string
+@function str-trim($string) {
+  $start: 1;
+  $end: str-length($string);
+
+  // Trim leading spaces
+  @while $start <= $end and str-slice($string, $start, $start) == ' ' {
+    $start: $start + 1;
+  }
+
+  // Trim trailing spaces
+  @while $end >= $start and str-slice($string, $end, $end) == ' ' {
+    $end: $end - 1;
+  }
+
+  @return str-slice($string, $start, $end);
+}
+
 // Helper function to convert string to number (handles decimals)
 @function to-number($string) {
   @if type-of($string) == 'number' {
     @return $string;
   }
+
+  // Trim whitespace
+  $string: str-trim($string);
 
   $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
   $numbers: 0 1 2 3 4 5 6 7 8 9;
