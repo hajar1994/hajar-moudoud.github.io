@@ -6,6 +6,7 @@ on:
       - 'talks/**'
       - '_talks/**'
       - 'talkmap.ipynb'
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 permissions:
   contents: write
