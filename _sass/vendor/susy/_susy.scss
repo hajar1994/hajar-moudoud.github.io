@@ -1,0 +1,81 @@
+// Simple Susy grid mixin replacement
+// Original Susy library: https://github.com/oddbird/susy
+
+@mixin border-box-sizing {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}
+
+@mixin container($width: 100%) {
+  max-width: $width;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin span($span) {
+  // Simple grid implementation
+  // Extract the numbers from strings like "10 of 12 last" or "5 of 12"
+
+  @if type-of($span) == 'string' {
+    // Parse the span string
+    $parts: ();
+    $index: str-index($span, ' of ');
+
+    @if $index {
+      $numerator: str-slice($span, 1, $index - 1);
+      $rest: str-slice($span, $index + 4);
+      $denominator-end: str-index($rest, ' ');
+
+      @if $denominator-end {
+        $denominator: str-slice($rest, 1, $denominator-end - 1);
+        $width: (to-number($numerator) / to-number($denominator)) * 100%;
+
+        @if str-index($span, 'last') {
+          float: right;
+          margin-right: 0;
+        } @else if str-index($span, 'rtl') {
+          float: right;
+        } @else {
+          float: left;
+        }
+
+        width: $width;
+      } @else {
+        $denominator: $rest;
+        $width: (to-number($numerator) / to-number($denominator)) * 100%;
+        float: left;
+        width: $width;
+      }
+    }
+  } @else {
+    // If it's just a number, use it as is
+    width: $span;
+    float: left;
+  }
+}
+
+// Helper function to convert string to number
+@function to-number($string) {
+  @if type-of($string) == 'number' {
+    @return $string;
+  }
+
+  $strings: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+  $numbers: 0 1 2 3 4 5 6 7 8 9;
+  $result: 0;
+
+  @for $i from 1 through str-length($string) {
+    $character: str-slice($string, $i, $i);
+    $index: index($strings, $character);
+
+    @if $index {
+      $number: nth($numbers, $index);
+      $result: $result * 10 + $number;
+    }
+  }
+
+  @return $result;
+}

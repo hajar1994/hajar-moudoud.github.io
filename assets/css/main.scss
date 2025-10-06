@@ -16,7 +16,7 @@
     "theme/{{ site.site_theme | default: 'default' | append: '_dark' }}",
 
     "include/mixins",
-    // "vendor/susy/susy",
+    "vendor/susy/susy",
 
     "layout/reset",
     "layout/base",
