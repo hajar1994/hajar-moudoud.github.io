@@ -21,22 +21,30 @@
     $index: str-index($span, ' of ');
 
     @if $index {
-      $numerator-str: str-slice($span, 1, $index - 1);
+      $numerator-str: str-trim(str-slice($span, 1, $index - 1));
       $rest: str-slice($span, $index + 4);
       $denominator-end: str-index($rest, ' ');
 
       @if $denominator-end {
-        $denominator-str: str-slice($rest, 1, $denominator-end - 1);
+        $denominator-str: str-trim(str-slice($rest, 1, $denominator-end - 1));
       } @else {
-        $denominator-str: $rest;
+        $denominator-str: str-trim($rest);
       }
 
       $numerator: to-number($numerator-str);
       $denominator: to-number($denominator-str);
-      @return ($numerator / $denominator) * 100%;
+
+      @if type-of($numerator) == 'number' and type-of($denominator) == 'number' {
+        @return ($numerator / $denominator) * 100%;
+      }
     }
   }
-  @return $span;
+
+  @if type-of($span) == 'number' {
+    @return $span;
+  }
+
+  @return 0%;
 }
 
 // span() mixin for applying width and float (for use with @include)
