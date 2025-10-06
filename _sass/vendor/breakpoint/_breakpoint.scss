@@ -1,0 +1,12 @@
+// Simple breakpoint mixin replacement
+// Original breakpoint library: https://github.com/at-import/breakpoint
+
+@mixin breakpoint-set($key, $value) {
+  // Simple implementation - just ignore the setting
+}
+
+@mixin breakpoint($media) {
+  @media screen and (min-width: $media) {
+    @content;
+  }
+}
